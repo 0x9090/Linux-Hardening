@@ -11,4 +11,4 @@ Uses open-source Puppet modules taken from the Forge / Github.
 * hardening/ssh_hardening - https://forge.puppet.com/hardening/ssh_hardening
 
 ## Bootstrap Command
-cd /opt/ && git clone https://github.com/0x9090/Puppet-Linux-Hardening.git && setup.sh
+cd /opt/ && git clone https://github.com/0x9090/Linux-Hardening.git && setup.sh
