@@ -24,4 +24,9 @@ class ssh_hardening_config {
       'Banner'	    		        => '/etc/banner',
     },
   }
+    file { 'banner':
+      path => '/etc/banner',
+      ensure => file,
+      source => 'puppet:///modules/os_hardening_config/banner',
+    }
 }

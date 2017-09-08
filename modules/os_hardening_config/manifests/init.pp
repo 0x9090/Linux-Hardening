@@ -17,8 +17,9 @@ class os_hardening_config {
     auth_lockout_time         => 300,
     login_timeout             => 60,
     allow_login_without_home  => true,
-    passwdqc_enabled          => false,
-    # passwdqc_options          => "",
+    ignore_users              => [],
+    passwdqc_enabled          => true,
+    passwdqc_options          => "min=20,16,12,12,8", # https://uit.stanford.edu/service/accounts/passwords/quickguide
     allow_change_user         => true,
     enable_module_loading     => true,
     load_modules              => [],

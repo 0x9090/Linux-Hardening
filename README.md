@@ -1,7 +1,7 @@
 # Puppet Debian Hardening
 Masterless Puppet Environment For Debian Hardening
 
-!! Work-In-Progress !! - Not for production systems (yet)
+**!! Work-In-Progress !! - Not for production systems** (yet)
 
 Works with Debian 9 and Puppet 4.8.2
 
