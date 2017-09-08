@@ -9,4 +9,3 @@ current_path=${PWD##*/}
 
 apt update && apt upgrade -y
 apt install puppet -y
-
