@@ -17,7 +17,6 @@ class os_hardening_config {
     auth_lockout_time         => 300,
     login_timeout             => 60,
     allow_login_without_home  => true,
-    ignore_users              => [],
     passwdqc_enabled          => true,
     passwdqc_options          => "min=20,16,12,12,8", # https://uit.stanford.edu/service/accounts/passwords/quickguide
     allow_change_user         => true,
@@ -43,4 +42,21 @@ class os_hardening_config {
   #  secret_key => '#######',
   #  scratch_codes => ['###', '###', '###', '###', '###'],
   #}
+
+  class { 'unattended_upgrades':
+    age   => { 'max' => 10 },
+    mail  => { 'to'             => 'admin@domain.tld',
+               'only_on_error'  => true},
+    auto  => { 'reboot'               => false,
+               'clean'                => 0,
+               'remove'               => true
+    },
+    origins => ['${distro_id}:${distro_codename}',
+      '${distro_id}:${distro_codename}-security',
+      '${distro_id}ESM:${distro_codename}'],
+    update  => 1,
+    upgrade => 1,
+    enable  => 1,
+    package_ensure  => 'latest'
+  }
 }

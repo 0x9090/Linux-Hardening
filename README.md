@@ -5,17 +5,28 @@ Masterless Puppet Environment For Debian Hardening
 
 Works with Debian 9 and Puppet 4.8.2
 
-Uses open-source Puppet modules from the Forge / Github
+## Hardening Features
+* Disables IPv6
+* Disables Desktop GUI (Gnome, KDE, etc.)
+* Hardens SSH Server Configuration
+* Enforces Stanford Password policy and Google TOTP 2FA
+* Enables memory corruption exploit mitigations
+* Applies security patches daily
 
+## Uses Open-Source Modules
 * puppetlabs/stdlib - https://forge.puppet.com/puppetlabs/stdlib
 * puppetlabs/firewall - https://forge.puppet.com/puppetlabs/firewall
 * hardening/os_hardening - https://forge.puppet.com/hardening/os_hardening
 * hardening/ssh_hardening - https://forge.puppet.com/hardening/ssh_hardening
 * saz/ssh - https://forge.puppet.com/saz/ssh
 * camptocamp/googleauthenticator - https://forge.puppet.com/camptocamp/googleauthenticator
+* thias/sysctl - https://forge.puppet.com/thias/sysctl
+* puppet/unattended_upgrades - https://forge.puppet.com/puppet/unattended_upgrades
+* puppetlabs/apt - https://forge.puppet.com/puppetlabs/apt
 
-## Bootstrap Command
-cd /opt/ && sudo git clone https://github.com/0x9090/Linux-Hardening.git && sudo sh setup.sh
+## Bootstrap Commands
+cd /opt/ && sudo git clone https://github.com/0x9090/Linux-Hardening.git
+cd ./Linux-Hardening && sudo ./setup.sh && sudo ./run.sh
 
 ## Code Layout
 The top-level nodes are configured in the site.pp file. There are several different hardening domains
