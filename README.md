@@ -17,7 +17,16 @@ Only intented for a non-gui Debian install, starting with only the "Standard sys
 * Locks down firewall rule to minimal necessary
 * Disables uncommon kernel modules (floppy, usb storage, etc)
 
-## Uses Open-Source Modules
+## Prerequesites
+**apt install sudo git wget**
+
+## Bootstrap Command
+Automatically downloads and installs the hardening controls on a stock Debian machine.  
+Ensure you have console access to the box if recovery is needed.
+
+**$(cd /opt/ && sudo git clone https://github.com/0x9090/Linux-Hardening.git && sudo Linux-Hardening/setup.sh -a)**
+
+## Uses Open-Source Puppet Modules
 * puppetlabs/stdlib - https://forge.puppet.com/puppetlabs/stdlib
 * puppetlabs/firewall - https://forge.puppet.com/puppetlabs/firewall
 * hardening/os_hardening - https://forge.puppet.com/hardening/os_hardening
@@ -31,27 +40,16 @@ Only intented for a non-gui Debian install, starting with only the "Standard sys
 * voxpopuli/extlib - https://forge.puppet.com/puppet/extlib
 * camptocamp/kmod - https://forge.puppet.com/camptocamp/kmod
 
-## Prerequesites
-* wget
-* git
-* sudo
-
-## Bootstrap Command
-Automatically downloads and installs the hardening controls on a stock Debian machine.  
-Ensure you have console access to the box if recovery is needed.
-
-**$(cd /opt/ && sudo git clone https://github.com/0x9090/Linux-Hardening.git && sudo Linux-Hardening/setup.sh -a)**
-
-## Code Layout
+## Environment Layout
 **setup.sh** = Main installer script. Run this once, and the controls will be implemented and enforced  
 **run.sh** = Performs a Puppet run to manually apply the security controls  
 **site.pp** = Top-level node definitions  
 
 There are several different hardening domains, and each domain is a collection of related security controls.
 
-* OS - Locks down Debian and reduces attack surfaces ([os_hardening_config/manifests/init.pp](https://github.com/0x9090/Linux-Hardening/blob/master/modules/os_hardening_config/manifests/init.pp))
-* SSH - Configures SSH (and Google 2FA) for secure access ([ssh_hardening_config/manifests/init.pp](https://github.com/0x9090/Linux-Hardening/blob/master/modules/ssh_hardening_config/manifests/init.pp))
-* Firewall - Enforces the host firewall config to your rule set ([firewall_config/manifests/init.pp](https://github.com/0x9090/Linux-Hardening/blob/master/modules/firewall_config/manifests/init.pp))
+* **OS** - Locks down Debian and reduces attack surfaces ([os_hardening_config/manifests/init.pp](https://github.com/0x9090/Linux-Hardening/blob/master/modules/os_hardening_config/manifests/init.pp))
+* **SSH** - Configures SSH (and Google 2FA) for secure access ([ssh_hardening_config/manifests/init.pp](https://github.com/0x9090/Linux-Hardening/blob/master/modules/ssh_hardening_config/manifests/init.pp))
+* **Firewall** - Enforces the host firewall config to your rule set ([firewall_config/manifests/init.pp](https://github.com/0x9090/Linux-Hardening/blob/master/modules/firewall_config/manifests/init.pp))
 
 Most of the code is in the /modules/ folder. Every "_config" postpended module, is a hardening domain configuration 
 module. Those modules contain an init.pp file, which configures the hardening domain. Those init.pp files are what 
