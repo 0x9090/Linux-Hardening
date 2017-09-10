@@ -8,14 +8,14 @@ Works with Debian 9 and Puppet 4.8.2
 (Intented for a minimal Debian install using only the "Standard system utilites" and "SSH Server")
 
 ## Hardening Features
-* Disables IPv6
+* Disables IPv6 + Unecessary network services
 * Disables desktop GUI (Gnome, KDE, etc.)
 * Hardens SSH server + brute force protection
 * Enforces Stanford password policy and Google TOTP 2FA
 * Enables memory corruption exploit mitigations
 * Applies security patches daily
 * Locks down firewall rule to minimal necessary
-* Disables uncommon kernel modules (floppy, usb storage, )
+* Disables uncommon kernel modules (floppy, usb storage, etc)
 
 ## Uses Open-Source Modules
 * puppetlabs/stdlib - https://forge.puppet.com/puppetlabs/stdlib
