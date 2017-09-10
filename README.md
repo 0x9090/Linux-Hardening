@@ -60,3 +60,4 @@ you'll work in to customize the hardening to your needs.
 * These controls are only to be used on a fresh, minimal Debian 9 install
 * You need to configure Google 2FA in the os_hardening_config module
 * Firewall is only configured for SSH inbound
+* Create a lowly privleged user, as these controls will disallow root to SSH in
