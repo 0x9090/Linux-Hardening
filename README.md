@@ -1,11 +1,11 @@
 # Puppet Debian Hardening
-Masterless Puppet Environment For Debian Hardening
+### Masterless Puppet Environment For Debian Hardening
+This repo contains a masterless Puppet environment which may be used to lock down a minimal Debian server even further
+than stock. These controls utilize only open-source components, and can be deploy to any stock Debian 9 machine.
 
-**!! Work-In-Progress !! - Not for production systems** (yet)
+Works on **Debian 9** and **Puppet 4.8.2** 
 
-Works with Debian 9 and Puppet 4.8.2 
-
-(Intented for a minimal Debian install using only the "Standard system utilites" and "SSH Server")
+__Hardening intented for a non-gui Debian install, using only the "Standard system utilites" and "SSH Server"__
 
 ## Hardening Features
 * Disables IPv6 + Unecessary network services
