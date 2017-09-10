@@ -1,4 +1,5 @@
 class os_hardening_config {
+#========== OS Hardening ==========#
   file { "/usr/bin/X11": # fixes X11 bug
     ensure  => "absent",
   } ->
@@ -33,6 +34,7 @@ class os_hardening_config {
     # dry_run_on_unknown        => false,
   }
 
+#======== Google Auth ========#
   #googleauthenticator::pam {
   #  'login': mode => 'root-only';
   #  'su':    mode => 'root-only';
@@ -43,13 +45,14 @@ class os_hardening_config {
   #  scratch_codes => ['###', '###', '###', '###', '###'],
   #}
 
+#======== Auto Patching =========#
   class { 'unattended_upgrades':
     age   => { 'max' => 10 },
     mail  => { 'to'             => 'admin@domain.tld',
-               'only_on_error'  => true},
+      'only_on_error'  => true},
     auto  => { 'reboot'               => false,
-               'clean'                => 0,
-               'remove'               => true
+      'clean'                => 0,
+      'remove'               => true
     },
     origins => ['${distro_id}:${distro_codename}',
       '${distro_id}:${distro_codename}-security',
@@ -58,5 +61,60 @@ class os_hardening_config {
     upgrade => 1,
     enable  => 1,
     package_ensure  => 'latest'
+  }
+
+#========= Surface Reduction =========#
+  kmod::install { 'dccp': command => '/bin/false' }
+  kmod::blacklist { 'dccp': }
+  kmod::install { 'cdrom': command  => '/bin/false' }
+  kmod::blacklist { 'cdrom': }
+  kmod::install { 'sr_mod': command => '/bin/false' }
+  kmod::blacklist { 'sr_mod': }
+  kmod::install { 'sctp': command => '/bin/false' }
+  kmod::blacklist { 'sctp': }
+  kmod::install { 'floppy': command => '/bin/false' }
+  kmod::blacklist { 'floppy': }
+  kmod::install { 'tipc': command => '/bin/false' }
+  kmod::blacklist { 'tipc': }
+  kmod::install { 'rds': command  => '/bin/false' }
+  kmod::blacklist { 'rds': }
+  kmod::install { 'usb-storage': command  => '/bin/false' }
+  kmod::blacklist { 'usb-storage': }
+  kmod::install { 'joymod': command => '/bin/false' }
+  kmod::blacklist { 'joymod': }
+  kmod::install { 'pcspkr': command => '/bin/false' }
+  kmod::blacklist { 'pcspkr': }
+
+  if defined(Service['portmap']) {
+    service { 'portmap':
+      ensure  => 'stopped',
+    }
+  }
+  if defined(Package['portmap']) {
+    package { 'portmap':
+      ensure  => 'absent',
+    }
+  }
+  if defined(Service['rpcbind']) {
+    service { 'rpcbind':
+      ensure  => 'stopped',
+      enable  => false,
+    }
+  }
+  if defined(Package['rpcbind']) {
+    package { 'rpcbind':
+      ensure  => 'absent',
+    }
+  }
+  if defined(Service['nfs-common']) {
+    service { 'nfs-common':
+      ensure  => 'stopped',
+      enable  => false,
+    }
+  }
+  if defined(Package['nfs-common']) {
+    package { 'nfs-common':
+      ensure  => 'absent',
+    }
   }
 }
