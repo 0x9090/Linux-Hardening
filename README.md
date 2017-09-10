@@ -19,20 +19,30 @@ Works with Debian 9 and Puppet 4.8.2
 * hardening/os_hardening - https://forge.puppet.com/hardening/os_hardening
 * hardening/ssh_hardening - https://forge.puppet.com/hardening/ssh_hardening
 * saz/ssh - https://forge.puppet.com/saz/ssh
+* dhoppe/fail2ban - https://forge.puppet.com/dhoppe/fail2ban
 * camptocamp/googleauthenticator - https://forge.puppet.com/camptocamp/googleauthenticator
 * thias/sysctl - https://forge.puppet.com/thias/sysctl
 * puppet/unattended_upgrades - https://forge.puppet.com/puppet/unattended_upgrades
 * puppetlabs/apt - https://forge.puppet.com/puppetlabs/apt
+* voxpopuli/extlib - https://forge.puppet.com/puppet/extlib
 
-## Bootstrap Commands
-cd /opt/ && sudo git clone https://github.com/0x9090/Linux-Hardening.git
-cd ./Linux-Hardening && sudo ./setup.sh && sudo ./run.sh
+## Prerequesites
+* wget
+* git
+* sudo
+
+## Bootstrap Command
+Automatically downloads and installs the hardening controls on a stock Debian machine.
+Ensure you have console access to the box if recovery is needed.
+
+$(cd /opt/ && sudo git clone https://github.com/0x9090/Linux-Hardening.git && sudo Linux-Hardening/setup.sh -a)
 
 ## Code Layout
 The top-level nodes are configured in the site.pp file. There are several different hardening domains
 
 * OS - Locks down Debian and reduces attack surfaces (/modules/os_hardening_config/manifests/init.pp)
 * SSH - Configures SSH (and Google 2FA) for secure access (/modules/ssh_hardening_config/init.pp)
+* Firewall - Enforces the host firewall config to your rule set (/modules/firewall_config/init.pp)
 
 Most of the code is in the /modules/ folder.
 Every "*_config" named module is a hardening configuration module. Those modules only contain one init.pp file, which

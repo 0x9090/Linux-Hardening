@@ -24,9 +24,18 @@ class ssh_hardening_config {
       'Banner'	    		        => '/etc/banner',
     },
   }
-    file { 'banner':
-      path => '/etc/banner',
-      ensure => file,
-      source => 'puppet:///modules/os_hardening_config/banner',
-    }
+  file { 'banner':
+    path => '/etc/banner',
+    ensure => file,
+    source => 'puppet:///modules/os_hardening_config/banner',
+  }
+
+  class { 'fail2ban':
+    package_ensure    => 'latest',
+    config_dir_purge  => true,
+    bantime           => '432000',
+    jails             => ['ssh', 'ssh-ddos'],
+    maxretry          => '3',
+    service_ensure    => 'running',
+  }
 }
