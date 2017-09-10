@@ -37,15 +37,15 @@ Works with Debian 9 and Puppet 4.8.2
 * sudo
 
 ## Bootstrap Command
-Automatically downloads and installs the hardening controls on a stock Debian machine.
+Automatically downloads and installs the hardening controls on a stock Debian machine.  
 Ensure you have console access to the box if recovery is needed.
 
-$(cd /opt/ && sudo git clone https://github.com/0x9090/Linux-Hardening.git && sudo Linux-Hardening/setup.sh -a)
+**$(cd /opt/ && sudo git clone https://github.com/0x9090/Linux-Hardening.git && sudo Linux-Hardening/setup.sh -a)**
 
 ## Code Layout
-**setup.sh** = Main installer script. Run this once, and the controls will be implemented and enforced.
-**run.sh** = Performs a Puppet run to manually apply the security controls
-**site.pp** = Top-level node definitions
+**setup.sh** = Main installer script. Run this once, and the controls will be implemented and enforced.  
+**run.sh** = Performs a Puppet run to manually apply the security controls  
+**site.pp** = Top-level node definitions  
 
 There are several different hardening domains, and each domain is a collection of related security controls.
 
