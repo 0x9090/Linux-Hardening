@@ -28,4 +28,5 @@ apt update && apt upgrade -y
 apt install puppet -y
 
 iptables -F
+chmod +x ./run.sh
 ./run.sh
