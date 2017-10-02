@@ -24,7 +24,7 @@ Only intented for a non-gui Debian install, starting with only the "Standard sys
 Automatically downloads and installs the hardening controls on a stock Debian machine.  
 Ensure you have console access to the box if recovery is needed.
 
-**$(cd /opt/ && sudo git clone https://github.com/0x9090/Linux-Hardening.git && sudo /opt/Linux-Hardening/setup.sh -a)**
+**$(cd /opt/ && sudo git clone https://github.com/0x9090/Linux-Hardening.git && sudo sh -c setup.sh -a)**
 
 ## Uses Open-Source Puppet Modules
 * puppetlabs/stdlib - https://forge.puppet.com/puppetlabs/stdlib
