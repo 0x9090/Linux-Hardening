@@ -61,4 +61,4 @@ you'll work in to customize the hardening to your needs.
 * You need to configure Google 2FA in the os_hardening_config module
 * Firewall is only configured for SSH inbound
 * Create a lowly privleged user, as these controls will disallow root to SSH in
-* It's a good, optional, practice to update all the bundled modules before deployment
+* It's a good practice to update all the bundled modules before deployment to ensure any known vulnerabilities are removed
