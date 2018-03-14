@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'concat backup parameter' do
+describe 'concat_file backup parameter' do
   basedir = default.tmpdir('concat')
   context 'when puppet' do
     before(:all) do
@@ -15,10 +15,10 @@ describe 'concat backup parameter' do
       apply_manifest(pp)
     end
     pp = <<-MANIFEST
-      concat { '#{basedir}/file':
+      concat_file { '#{basedir}/file':
         backup => 'puppet',
       }
-      concat::fragment { 'new file':
+      concat_fragment { 'new file':
         target  => '#{basedir}/file',
         content => 'new contents',
       }
@@ -50,10 +50,10 @@ describe 'concat backup parameter' do
       apply_manifest(pp)
     end
     pp = <<-MANIFEST
-      concat { '#{basedir}/file':
+      concat_file { '#{basedir}/file':
         backup => '.backup',
       }
-      concat::fragment { 'new file':
+      concat_fragment { 'new file':
         target  => '#{basedir}/file',
         content => 'new contents',
       }
@@ -91,10 +91,10 @@ describe 'concat backup parameter' do
       apply_manifest(pp)
     end
     pp = <<-MANIFEST
-      concat { '#{basedir}/file':
+      concat_file { '#{basedir}/file':
         backup => '.backup',
       }
-      concat::fragment { 'new file':
+      concat_fragment { 'new file':
         target  => '#{basedir}/file',
         content => 'new contents',
       }

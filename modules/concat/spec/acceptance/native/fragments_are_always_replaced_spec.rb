@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'concat::fragment replace' do
+describe 'concat_fragment replace' do
   basedir = default.tmpdir('concat')
 
   context 'when run should create fragment files' do
@@ -14,17 +14,17 @@ describe 'concat::fragment replace' do
     end
 
     pp1 = <<-MANIFEST
-      concat { '#{basedir}/foo': }
+      concat_file { '#{basedir}/foo': }
 
-      concat::fragment { '1':
+      concat_fragment { '1':
         target  => '#{basedir}/foo',
         content => 'caller has replace unset run 1',
       }
     MANIFEST
     pp2 = <<-MANIFEST
-      concat { '#{basedir}/foo': }
+      concat_file { '#{basedir}/foo': }
 
-      concat::fragment { '1':
+      concat_fragment { '1':
         target  => '#{basedir}/foo',
         content => 'caller has replace unset run 2',
       }
@@ -61,18 +61,18 @@ describe 'concat::fragment replace' do
 
     pp1 = <<-MANIFEST
       File { replace=>true }
-      concat { '#{basedir}/foo': }
+      concat_file { '#{basedir}/foo': }
 
-      concat::fragment { '1':
+      concat_fragment { '1':
         target  => '#{basedir}/foo',
         content => 'caller has replace true set run 1',
       }
     MANIFEST
     pp2 = <<-MANIFEST
       File { replace=>true }
-      concat { '#{basedir}/foo': }
+      concat_file { '#{basedir}/foo': }
 
-      concat::fragment { '1':
+      concat_fragment { '1':
         target  => '#{basedir}/foo',
         content => 'caller has replace true set run 2',
       }
@@ -109,18 +109,18 @@ describe 'concat::fragment replace' do
 
     pp1 = <<-MANIFEST
       File { replace=>false }
-      concat { '#{basedir}/foo': }
+      concat_file { '#{basedir}/foo': }
 
-      concat::fragment { '1':
+      concat_fragment { '1':
         target  => '#{basedir}/foo',
         content => 'caller has replace false set run 1',
       }
     MANIFEST
     pp2 = <<-MANIFEST
       File { replace=>false }
-      concat { '#{basedir}/foo': }
+      concat_file { '#{basedir}/foo': }
 
-      concat::fragment { '1':
+      concat_fragment { '1':
         target  => '#{basedir}/foo',
         content => 'caller has replace false set run 2',
       }

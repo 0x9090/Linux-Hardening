@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'concat validate_cmd parameter', unless: (fact('kernel') != 'Linux') do
+describe 'concat_file validate_cmd parameter', unless: (fact('kernel') != 'Linux') do
   basedir = default.tmpdir('concat')
   context 'with "/usr/bin/test -e %"' do
     before(:all) do
@@ -13,10 +13,10 @@ describe 'concat validate_cmd parameter', unless: (fact('kernel') != 'Linux') do
       apply_manifest(pp)
     end
     pp = <<-MANIFEST
-      concat { '#{basedir}/file':
+      concat_file { '#{basedir}/file':
         validate_cmd => '/usr/bin/test -e %',
       }
-      concat::fragment { 'content':
+      concat_fragment { 'content':
         target  => '#{basedir}/file',
         content => 'content',
       }

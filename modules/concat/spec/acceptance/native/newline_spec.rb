@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'concat ensure_newline parameter' do
+describe 'concat_file ensure_newline parameter' do
   basedir = default.tmpdir('concat')
   context 'when false' do
     before(:all) do
@@ -13,14 +13,14 @@ describe 'concat ensure_newline parameter' do
       apply_manifest(pp)
     end
     pp = <<-MANIFEST
-      concat { '#{basedir}/file':
+      concat_file { '#{basedir}/file':
         ensure_newline => false,
       }
-      concat::fragment { '1':
+      concat_fragment { '1':
         target  => '#{basedir}/file',
         content => '1',
       }
-      concat::fragment { '2':
+      concat_fragment { '2':
         target  => '#{basedir}/file',
         content => '2',
       }
@@ -39,14 +39,14 @@ describe 'concat ensure_newline parameter' do
 
   context 'when true' do
     pp = <<-MANIFEST
-      concat { '#{basedir}/file':
+      concat_file { '#{basedir}/file':
         ensure_newline => true,
       }
-      concat::fragment { '1':
+      concat_fragment { '1':
         target  => '#{basedir}/file',
         content => '1',
       }
-      concat::fragment { '2':
+      concat_fragment { '2':
         target  => '#{basedir}/file',
         content => '2',
       }

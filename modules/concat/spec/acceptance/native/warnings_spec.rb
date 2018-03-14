@@ -1,24 +1,24 @@
 require 'spec_helper_acceptance'
 
-describe 'warnings' do
+describe 'concat_fragment warnings' do
   basedir = default.tmpdir('concat')
 
   shared_examples 'has_warning' do |pp, w|
-    it 'applies the manifest twice with a stderr regex' do
+    it 'applies the manifest twice with a stderr regex first' do
       expect(apply_manifest(pp, catch_failures: true).stderr).to match(%r{#{Regexp.escape(w)}}m)
     end
-    it 'applies the manifest twice with a stderr regex' do
+    it 'applies the manifest twice with a stderr regex second' do
       expect(apply_manifest(pp, catch_changes: true).stderr).to match(%r{#{Regexp.escape(w)}}m)
     end
   end
 
-  context 'when concat::fragment target not found' do
+  context 'when concat_fragment target not found' do
     context 'when target not found' do
       pp = <<-MANIFEST
-      concat { 'file':
+      concat_file { 'file':
         path => '#{basedir}/file',
       }
-      concat::fragment { 'foo':
+      concat_fragment { 'foo':
         target  => '#{basedir}/bar',
         content => 'bar',
       }

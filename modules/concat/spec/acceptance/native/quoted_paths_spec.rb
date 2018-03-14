@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'quoted paths' do
+describe 'concat_file with quoted paths' do
   basedir = default.tmpdir('concat')
 
   before(:all) do
@@ -17,13 +17,13 @@ describe 'quoted paths' do
 
   context 'with path with blanks' do
     pp = <<-MANIFEST
-      concat { '#{basedir}/concat test/foo':
+      concat_file { '#{basedir}/concat test/foo':
       }
-      concat::fragment { '1':
+      concat_fragment { '1':
         target  => '#{basedir}/concat test/foo',
         content => 'string1',
       }
-      concat::fragment { '2':
+      concat_fragment { '2':
         target  => '#{basedir}/concat test/foo',
         content => 'string2',
       }

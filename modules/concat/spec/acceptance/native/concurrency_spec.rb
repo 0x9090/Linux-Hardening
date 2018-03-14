@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'with file recursive purge' do
+describe 'concat_file with file recursive purge' do
   basedir = default.tmpdir('concat')
   context 'when run should still create concat file' do
     pp = <<-MANIFEST
@@ -10,12 +10,12 @@ describe 'with file recursive purge' do
         recurse => true,
       }
 
-      concat { "foobar":
+      concat_file { "foobar":
         ensure => 'present',
         path   => '#{basedir}/bar/foobar',
       }
 
-      concat::fragment { 'foo':
+      concat_fragment { 'foo':
         target => 'foobar',
         content => 'foo',
       }

@@ -1,19 +1,19 @@
 require 'spec_helper_acceptance'
 
-describe 'symbolic name' do
+describe 'concat_file symbolic name' do
   basedir = default.tmpdir('concat')
   pp = <<-MANIFEST
-    concat { 'not_abs_path':
+    concat_file { 'not_abs_path':
       path => '#{basedir}/file',
     }
 
-    concat::fragment { '1':
+    concat_fragment { '1':
       target  => 'not_abs_path',
       content => '1',
       order   => '01',
     }
 
-    concat::fragment { '2':
+    concat_fragment { '2':
       target  => 'not_abs_path',
       content => '2',
       order   => '02',

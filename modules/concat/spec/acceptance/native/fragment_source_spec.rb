@@ -15,7 +15,7 @@ else
   groupname = 'root'
 end
 
-describe 'concat::fragment source' do
+describe 'concat_fragment source' do
   basedir = default.tmpdir('concat')
   context 'when run should read file fragments from local system' do
     pp = <<-MANIFEST
@@ -25,18 +25,18 @@ describe 'concat::fragment source' do
       file { '#{basedir}/file2':
         content => "file2 contents\n"
       }
-      concat { '#{basedir}/foo': }
+      concat_file { '#{basedir}/foo': }
 
-      concat::fragment { '1':
+      concat_fragment { '1':
         target  => '#{basedir}/foo',
         source  => '#{basedir}/file1',
         require => File['#{basedir}/file1'],
       }
-      concat::fragment { '2':
+      concat_fragment { '2':
         target  => '#{basedir}/foo',
         content => 'string1 contents',
       }
-      concat::fragment { '3':
+      concat_fragment { '3':
         target  => '#{basedir}/foo',
         source  => '#{basedir}/file2',
         require => File['#{basedir}/file2'],
@@ -50,15 +50,12 @@ describe 'concat::fragment source' do
 
     describe file("#{basedir}/foo") do
       it { is_expected.to be_file }
-
       its(:content) do
         is_expected.to match 'file1 contents'
       end
-
       its(:content) do
         is_expected.to match 'string1 contents'
       end
-
       its(:content) do
         is_expected.to match 'file2 contents'
       end
@@ -74,35 +71,35 @@ describe 'concat::fragment source' do
       file { '#{basedir}/file2':
         content => "file2 contents\n"
       }
-      concat { '#{basedir}/result_file1':
+      concat_file { '#{basedir}/result_file1':
         owner   => '#{username}',
         group   => '#{groupname}',
         mode    => '0644',
       }
-      concat { '#{basedir}/result_file2':
+      concat_file { '#{basedir}/result_file2':
         owner   => '#{username}',
         group   => '#{groupname}',
         mode    => '0644',
       }
-      concat { '#{basedir}/result_file3':
+      concat_file { '#{basedir}/result_file3':
         owner   => '#{username}',
         group   => '#{groupname}',
         mode    => '0644',
       }
 
-      concat::fragment { '1':
+      concat_fragment { '1':
         target  => '#{basedir}/result_file1',
         source  => [ '#{basedir}/file1', '#{basedir}/file2' ],
         require => [ File['#{basedir}/file1'], File['#{basedir}/file2'] ],
         order   => '01',
       }
-      concat::fragment { '2':
+      concat_fragment { '2':
         target  => '#{basedir}/result_file2',
         source  => [ '#{basedir}/file2', '#{basedir}/file1' ],
         require => [ File['#{basedir}/file1'], File['#{basedir}/file2'] ],
         order   => '01',
       }
-      concat::fragment { '3':
+      concat_fragment { '3':
         target  => '#{basedir}/result_file3',
         source  => [ '#{basedir}/file1', '#{basedir}/file2' ],
         require => [ File['#{basedir}/file1'], File['#{basedir}/file2'] ],
@@ -143,15 +140,15 @@ describe 'concat::fragment source' do
     end
   end
 
-  context 'when run should fail if no match on source.' do
+  context 'when no match on source it should fail' do
     pp = <<-MANIFEST
-      concat { '#{basedir}/fail_no_source':
+      concat_file { '#{basedir}/fail_no_source':
         owner   => '#{username}',
         group   => '#{groupname}',
         mode    => '0644',
       }
 
-      concat::fragment { '1':
+      concat_fragment { '1':
         target  => '#{basedir}/fail_no_source',
         source => [ '#{basedir}/nofilehere', '#{basedir}/nothereeither' ],
         order   => '01',

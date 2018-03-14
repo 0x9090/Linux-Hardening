@@ -1,3 +1,36 @@
+## Supported Release 4.2.0
+### Summary
+This release introduces the conversion of the module to use PDK 1.3.2, along with the addition of rubocop with associated fixes.
+
+#### Changed
+- All changes in this release are for enabling rubocop, alongside the module then being converted over to the PDK.
+
+
+## Supported Releases 4.1.1
+### Summary
+This release is to update the formatting of the module, rubocop having been run for all ruby files and been set to run automatically on all future commits.
+
+#### Changed
+- Rubocop has been implemented.
+- SLES 10, Windows 2003 R2 and OSX 10.9 removed as supported.
+- OSX 10.10 and 10.11 added as supported.
+
+## Supported Releases 4.1.0
+### Summary
+
+This release is a rollup of changes. The most notable change being the addition of the 'format' attribute which allows output in JSON and YAML formats, and the 'force' attribute which if true forces a merge of duplicate keys for these formats.
+
+#### Features
+- Format and force attributes added.
+- Deprecated is_string in favour of puppet language.
+- End of Life Ubuntu releases removed as supported.
+- Debian 9 added and Debian 6 removed as supported.
+
+#### Bugfixes
+- (MODULES-4359) Fix native types so they can be used directly.
+- Update to tests to handle errors containing quote marks.
+- Update to tests to follow rspec-puppet pattern.
+
 ## Supported Releases 4.0.1
 ### Summary
 

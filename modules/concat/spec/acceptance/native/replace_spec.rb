@@ -1,8 +1,8 @@
 require 'spec_helper_acceptance'
 
-describe 'replacement of' do
+describe 'concat_file' do
   basedir = default.tmpdir('concat')
-  context 'when file should not succeed' do
+  context 'with file replace => false' do
     before(:all) do
       pp = <<-MANIFEST
           file { '#{basedir}':
@@ -15,16 +15,16 @@ describe 'replacement of' do
       apply_manifest(pp)
     end
     pp = <<-MANIFEST
-        concat { '#{basedir}/file':
+        concat_file { '#{basedir}/file':
           replace => false,
         }
 
-        concat::fragment { '1':
+        concat_fragment { '1':
           target  => '#{basedir}/file',
           content => '1',
         }
 
-        concat::fragment { '2':
+        concat_fragment { '2':
           target  => '#{basedir}/file',
           content => '2',
         }
@@ -49,7 +49,7 @@ describe 'replacement of' do
     end
   end
 
-  context 'when file should succeed' do
+  context 'with file replace => true' do
     before(:all) do
       pp = <<-MANIFEST
           file { '#{basedir}':
@@ -62,16 +62,16 @@ describe 'replacement of' do
       apply_manifest(pp)
     end
     pp = <<-MANIFEST
-        concat { '#{basedir}/file':
+        concat_file { '#{basedir}/file':
           replace => true,
         }
 
-        concat::fragment { '1':
+        concat_fragment { '1':
           target  => '#{basedir}/file',
           content => '1',
         }
 
-        concat::fragment { '2':
+        concat_fragment { '2':
           target  => '#{basedir}/file',
           content => '2',
         }
@@ -114,16 +114,16 @@ describe 'replacement of' do
     end
 
     pp = <<-MANIFEST
-        concat { '#{basedir}/file':
+        concat_file { '#{basedir}/file':
           replace => false,
         }
 
-        concat::fragment { '1':
+        concat_fragment { '1':
           target  => '#{basedir}/file',
           content => '1',
         }
 
-        concat::fragment { '2':
+        concat_fragment { '2':
           target  => '#{basedir}/file',
           content => '2',
         }
@@ -164,16 +164,16 @@ describe 'replacement of' do
     end
 
     pp = <<-MANIFEST
-        concat { '#{basedir}/file':
+        concat_file { '#{basedir}/file':
           replace => true,
         }
 
-        concat::fragment { '1':
+        concat_fragment { '1':
           target  => '#{basedir}/file',
           content => '1',
         }
 
-        concat::fragment { '2':
+        concat_fragment { '2':
           target  => '#{basedir}/file',
           content => '2',
         }
@@ -194,6 +194,7 @@ describe 'replacement of' do
       end
     end
   end
+  # symlink
 
   context 'when directory should not succeed' do
     before(:all) do
@@ -208,14 +209,14 @@ describe 'replacement of' do
       apply_manifest(pp)
     end
     pp = <<-MANIFEST
-        concat { '#{basedir}/file': }
+        concat_file { '#{basedir}/file': }
 
-        concat::fragment { '1':
+        concat_fragment { '1':
           target  => '#{basedir}/file',
           content => '1',
         }
 
-        concat::fragment { '2':
+        concat_fragment { '2':
           target  => '#{basedir}/file',
           content => '2',
         }
@@ -240,30 +241,32 @@ describe 'replacement of' do
   # files and symlinks, not directories.  The semantics either need to be
   # changed, extended, or a new param introduced to control directory
   # replacement.
-  context 'when directory should succeed', pending: 'not yet implemented' do
-    pp = <<-MANIFEST
-        concat { '#{basedir}/file':
-        }
-
-        concat::fragment { '1':
-          target  => '#{basedir}/file',
-          content => '1',
-        }
-
-        concat::fragment { '2':
-          target  => '#{basedir}/file',
-          content => '2',
-        }
-      MANIFEST
-
-    it 'applies the manifest twice with no stderr' do
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
-    end
-
-    describe file("#{basedir}/file") do
-      it { is_expected.to be_file }
-      its(:content) { is_expected.to match '1' }
-    end
+  context 'when directory should succeed' do
+    pending('This has yet to be implemented')
+    # pp = <<-MANIFEST
+    #     concat_file { '#{basedir}/file':
+    #     }
+    #
+    #     concat_fragment { '1':
+    #       target  => '#{basedir}/file',
+    #       content => '1',
+    #     }
+    #
+    #     concat_fragment { '2':
+    #       target  => '#{basedir}/file',
+    #       content => '2',
+    #     }
+    #   MANIFEST
+    #
+    # it 'applies the manifest twice with no stderr' do
+    #   apply_manifest(pp, catch_failures: true)
+    #   apply_manifest(pp, catch_changes: true)
+    # end
+    #
+    # describe file("#{basedir}/file") do
+    #   it { is_expected.to be_file }
+    #   its(:content) { is_expected.to match '1' }
+    # end
   end
+  # directory
 end

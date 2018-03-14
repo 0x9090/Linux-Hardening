@@ -18,7 +18,7 @@ else
   groupname = 'root'
 end
 
-describe 'basic concat test' do
+describe 'basic concat_file test' do
   basedir = default.tmpdir('concat')
 
   shared_examples 'successfully_applied' do |pp|
@@ -28,7 +28,7 @@ describe 'basic concat test' do
     end
   end
 
-  context 'with owner/group root' do
+  context 'when owner/group root' do
     before(:all) do
       pp = <<-MANIFEST
         file { '#{basedir}':
@@ -38,19 +38,19 @@ describe 'basic concat test' do
       apply_manifest(pp)
     end
     pp = <<-MANIFEST
-      concat { '#{basedir}/file':
+      concat_file { '#{basedir}/file':
         owner => '#{username}',
         group => '#{groupname}',
         mode  => '0644',
       }
 
-      concat::fragment { '1':
+      concat_fragment { '1':
         target  => '#{basedir}/file',
         content => '1',
         order   => '01',
       }
 
-      concat::fragment { '2':
+      concat_fragment { '2':
         target  => '#{basedir}/file',
         content => '2',
         order   => '02',
@@ -75,7 +75,7 @@ describe 'basic concat test' do
     end
   end
 
-  context 'when present with path set' do
+  context 'when set to present with path set' do
     before(:all) do
       pp = <<-MANIFEST
         file { '#{basedir}':
@@ -85,12 +85,12 @@ describe 'basic concat test' do
       apply_manifest(pp)
     end
     pp = "
-      concat { 'file':
+      concat_file { 'file':
         ensure => present,
         path   => '#{basedir}/file',
         mode   => '0644',
       }
-      concat::fragment { '1':
+      concat_fragment { '1':
         target  => 'file',
         content => '1',
         order   => '01',
@@ -107,7 +107,7 @@ describe 'basic concat test' do
       its(:content) { is_expected.to match '1' }
     end
   end
-  context 'when absent with path set' do
+  context 'when set to absent with path set' do
     before(:all) do
       pp = <<-MANIFEST
         file { '#{basedir}':
@@ -117,12 +117,12 @@ describe 'basic concat test' do
       apply_manifest(pp)
     end
     pp = "
-      concat { 'file':
+      concat_file { 'file':
         ensure => absent,
         path   => '#{basedir}/file',
         mode   => '0644',
       }
-      concat::fragment { '1':
+      concat_fragment { '1':
         target  => 'file',
         content => '1',
         order   => '01',
@@ -138,7 +138,7 @@ describe 'basic concat test' do
       it { is_expected.not_to be_file }
     end
   end
-  context 'when present with path that has special characters' do
+  context 'when set to present with path that has special characters' do
     filename = (fact('osfamily') == 'windows') ? 'file(1)' : 'file(1:2)'
 
     before(:all) do
@@ -150,12 +150,12 @@ describe 'basic concat test' do
       apply_manifest(pp)
     end
     pp = "
-      concat { '#{filename}':
+      concat_file { '#{filename}':
         ensure => present,
         path   => '#{basedir}/#{filename}',
         mode   => '0644',
       }
-      concat::fragment { '1':
+      concat_fragment { '1':
         target  => '#{filename}',
         content => '1',
         order   => '01',
@@ -172,7 +172,7 @@ describe 'basic concat test' do
       its(:content) { is_expected.to match '1' }
     end
   end
-  context 'with noop properly' do
+  context 'when noop' do
     before(:all) do
       pp = <<-MANIFEST
         file { '#{basedir}':
@@ -182,13 +182,13 @@ describe 'basic concat test' do
       apply_manifest(pp)
     end
     pp = "
-      concat { 'file':
+      concat_file { 'file':
         ensure => present,
         path   => '#{basedir}/file',
         mode   => '0644',
         noop   => true,
       }
-      concat::fragment { '1':
+      concat_fragment { '1':
         target  => 'file',
         content => '1',
         order   => '01',
